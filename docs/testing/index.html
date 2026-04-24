@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Testing — Pulse</title>
+    <meta name="description" content="The workspace uses Vitest from the root." />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-doc">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../index.html">Home</a><a class="nav-link" data-nav-link href="../index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../index.html">Overview</a><a class="docs-nav__link" href="../api/index.html">API reference</a><a class="docs-nav__link" href="../design/core/index.html">Runtime boundary</a><a class="docs-nav__link" href="../design/router/index.html">Router boundary</a><a class="docs-nav__link" href="../design/grip-gateway/index.html">GRIP gateway</a><a class="docs-nav__link" href="index.html" aria-current="page">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../../examples/index.html">Overview</a><a class="docs-nav__link" href="../../examples/01-minimal/index.html">Minimal Pulse app</a><a class="docs-nav__link" href="../../examples/02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../../examples/03-node/index.html">Node usage</a><a class="docs-nav__link" href="../../examples/04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Docs</a> / <span>Testing</span></nav>
+            <div class="page-hero__eyebrow">Contracts</div>
+            <h1 class="page-hero__title">Testing</h1>
+            <p class="page-hero__copy">The workspace uses Vitest from the root.</p>
+            <div class="meta-chips"><span class="chip">tests</span><span class="chip">e2e</span></div>
+          </div>
+        </section>
+        <article class="content-card prose"><h1 id="testing-pulse">Testing Pulse</h1>
+<p>The workspace uses Vitest from the root.</p>
+<h2 id="commands">Commands</h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">sh</span></div>
+  <pre><code class="language-sh">pnpm build
+pnpm test
+pnpm test:e2e
+pnpm test:e2e:node
+pnpm test:e2e:compute
+</code></pre>
+</div><h2 id="what-pnpm-test-covers">What <code>pnpm test</code> covers</h2>
+<p>Package-level contract tests under <code>packages/*/test/**/*.test.ts</code>.</p>
+<p>These should stay focused on package behavior:</p>
+<ul>
+<li><code>pulse</code> session, router, trace, broadcast seam</li>
+<li><code>pulse.node</code> request/response normalization</li>
+<li><code>pulse.grip</code> gateway/middleware/broadcaster behavior</li>
+</ul>
+<h2 id="what-pnpm-teste2e-covers">What <code>pnpm test:e2e</code> covers</h2>
+<p>The top-level <code>test/</code> package contains the current cross-environment harness slice.</p>
+<p>It covers:</p>
+<ul>
+<li>Node <code>listen()</code> / bind behavior</li>
+<li>compute/fetch-style <code>Router.bind()</code> behavior</li>
+<li>routing and middleware flow</li>
+<li>lifecycle hook wiring</li>
+<li>broadcast seam behavior with fake broadcaster</li>
+<li>error recovery flow</li>
+</ul>
+<h2 id="what-is-intentionally-not-covered-yet">What is intentionally not covered yet</h2>
+<p>This slice does not start Pushpin and does not validate real GRIP/Fanout gateway behavior.</p>
+<p>Deferred:</p>
+<ul>
+<li>Pushpin local Docker harness</li>
+<li>real GRIP handoff</li>
+<li>channel broker semantics</li>
+<li>gateway close/refresh behavior</li>
+<li>Fastly local compute/Viceroy parity</li>
+</ul>
+<h2 id="test-posture">Test posture</h2>
+<p>Prefer tests that verify Pulse-owned behavior. Do not retest Pushpin or provider internals in the core suite.</p>
+<p>Use provider/gateway tests only to prove the seam:</p>
+<ul>
+<li>context decoration</li>
+<li>subscribe/reply handoff behavior</li>
+<li>broadcaster calls</li>
+<li>ws unsubscribe/disconnect behavior</li>
+</ul>
+</article>
+      </div>
+      
+    <aside class="toc-card" aria-label="Table of contents">
+      <h2 class="toc-card__title">On this page</h2>
+      <ul class="toc-card__list">
+        <li><a class="toc-level-1" href="#testing-pulse">Testing Pulse</a></li><li><a class="toc-level-2" href="#commands">Commands</a></li><li><a class="toc-level-2" href="#what-pnpm-test-covers">What `pnpm test` covers</a></li><li><a class="toc-level-2" href="#what-pnpm-teste2e-covers">What `pnpm test:e2e` covers</a></li><li><a class="toc-level-2" href="#what-is-intentionally-not-covered-yet">What is intentionally not covered yet</a></li><li><a class="toc-level-2" href="#test-posture">Test posture</a></li>
+      </ul>
+    </aside>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

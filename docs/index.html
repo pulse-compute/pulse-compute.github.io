@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Docs — Pulse</title>
+    <meta name="description" content="Documentation overview for Pulse." />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-docs-overview">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../index.html">Home</a><a class="nav-link" data-nav-link href="index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header stack-lg">
+    <section class="page-hero">
+      <div class="page-hero__content">
+        <div class="page-hero__eyebrow">Docs</div>
+        <h1 class="page-hero__title">Documentation map</h1>
+        <p class="page-hero__copy">Multi-page docs and examples generated from the Pulse monorepo snapshot, with CSS-based layouts and build output ready for static hosting.</p>
+        <div class="page-hero__actions">
+          <a class="btn btn--primary" href="api/index.html">Open API reference</a>
+          <a class="btn btn--secondary" href="../examples/index.html">Browse examples</a>
+        </div>
+      </div>
+    </section>
+    <section class="overview-grid">
+    <article class="link-card">
+      <div class="eyebrow">Public surface</div>
+      <h3 class="link-card__title">API reference</h3>
+      <p class="link-card__copy">This is the current public API contract after the package split.</p>
+      <div class="link-card__meta"><span class="chip">reference</span><span class="chip">typed surface</span></div>
+      <a class="link-card__footer" href="api/index.html">Open page →</a>
+    </article>
+  
+    <article class="link-card">
+      <div class="eyebrow">Design</div>
+      <h3 class="link-card__title">Runtime boundary</h3>
+      <p class="link-card__copy">pulse.runtime is deliberately small.</p>
+      <div class="link-card__meta"><span class="chip">runtime</span><span class="chip">boundary</span></div>
+      <a class="link-card__footer" href="design/core/index.html">Open page →</a>
+    </article>
+  
+    <article class="link-card">
+      <div class="eyebrow">Design</div>
+      <h3 class="link-card__title">Router boundary</h3>
+      <p class="link-card__copy">Router exists to scope behavior, not to become a framework.</p>
+      <div class="link-card__meta"><span class="chip">router</span><span class="chip">path grammar</span></div>
+      <a class="link-card__footer" href="design/router/index.html">Open page →</a>
+    </article>
+  
+    <article class="link-card">
+      <div class="eyebrow">Design</div>
+      <h3 class="link-card__title">GRIP gateway</h3>
+      <p class="link-card__copy">GRIP is a lower-level HTTP gateway/proxy framing protocol.</p>
+      <div class="link-card__meta"><span class="chip">gateway</span><span class="chip">realtime</span></div>
+      <a class="link-card__footer" href="design/grip-gateway/index.html">Open page →</a>
+    </article>
+  
+    <article class="link-card">
+      <div class="eyebrow">Contracts</div>
+      <h3 class="link-card__title">Testing</h3>
+      <p class="link-card__copy">The workspace uses Vitest from the root.</p>
+      <div class="link-card__meta"><span class="chip">tests</span><span class="chip">e2e</span></div>
+      <a class="link-card__footer" href="testing/index.html">Open page →</a>
+    </article>
+  </section>
+    <article class="content-card prose"><h1 id="pulse">Pulse</h1>
+<p><strong>Pulse is a small Wasm-friendly app layer over a clean runtime substrate.</strong></p>
+<p>It gives you a paved road for the recurring pain points every edge/Wasm app hits:</p>
+<ul>
+<li>route and session behavior</li>
+<li>local <code>listen()</code> vs portable <code>bind()</code></li>
+<li>consistent config/env/profile access</li>
+<li>asset backend selection without bundling static files into the Wasm artifact</li>
+<li>optional GRIP gateway support when you need proxy-managed realtime flows</li>
+</ul>
+<p>The runtime stays small. The app layer smooths workflow.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li><strong><code>pulse.runtime</code> is the substrate.</strong> It owns <code>PulseRuntime</code>, <code>Router</code>, <code>Context</code>, sessions, broadcast seam, and <code>bind()</code>.</li>
+<li><strong><code>pulse</code> is the paved road.</strong> It wraps the runtime with config/profile/env helpers, router passthrough methods, and profile-scoped <code>listen()</code> convenience.</li>
+<li><strong><code>pulse.node</code> owns host lifecycle.</strong> It provides an explicit profile-local host binder for Node-style local hosting.</li>
+<li><strong><code>pulse.grip</code> is optional gateway capability.</strong> GRIP/Pushpin/Fastly Fanout mechanics stay additive.</li>
+<li><strong><code>pulse.assets</code> keeps assets out of the Wasm bundle.</strong> Asset backends are middleware/config, not core runtime.</li>
+</ul>
+<h2 id="packages">Packages</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pulse</code></td>
+<td>Opinionated app/workflow layer. Normal entry point.</td>
+</tr>
+<tr>
+<td><code>pulse.runtime</code></td>
+<td>Runtime substrate: <code>PulseRuntime</code>, <code>Router</code>, context, sessions, <code>bind()</code>, broadcast seam.</td>
+</tr>
+<tr>
+<td><code>pulse.node</code></td>
+<td>Node request/response normalization and profile-local host binder.</td>
+</tr>
+<tr>
+<td><code>pulse.grip</code></td>
+<td>Optional GRIP gateway middleware and broadcaster for Pushpin/Fastly Fanout-style gateways.</td>
+</tr>
+<tr>
+<td><code>pulse.assets</code></td>
+<td>Optional asset middleware for local/hosted/bucket-backed static assets outside the Wasm artifact.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="minimal-app">Minimal app</h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { Pulse, defineConfig } from 'pulse';
+
+const config = defineConfig((env) =&gt; ({
+  profile: env('PULSE_PROFILE', 'local'),
+  profiles: {
+    local: {
+      assets: { mode: 'local', dir: './public' }
+    },
+    edge: {
+      assets: {
+        mode: 'bucket',
+        endpoint: env('ASSET_ENDPOINT'),
+        bucket: env('ASSET_BUCKET'),
+        credentials: {
+          key: env('ASSET_KEY'),
+          secret: env('ASSET_SECRET')
+        },
+        ttl: 3600,
+        immutable: true
+      }
+    }
+  }
+}));
+
+const app = new Pulse({ config });
+
+app
+  .get('/health', async (ctx) =&gt; ctx.reply({ ok: true }))
+  .post('/compute/:id', async (ctx) =&gt; ctx.reply({ id: ctx.params.id, ok: true }));
+
+export default app.bind();
+</code></pre>
+</div><h2 id="local-node-host">Local Node host</h2>
+<p><code>bind()</code> is always available. <code>listen()</code> is only available when the active profile defines a profile-local host binder.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { Pulse, defineConfig } from 'pulse';
+import { node } from 'pulse.node';
+
+const config = defineConfig((env) =&gt; ({
+  profile: env('PULSE_PROFILE', 'local'),
+  profiles: {
+    local: {
+      host: node({
+        port: env.number('PORT', 3000),
+        baseUrl: env('BASE_URL', 'http://localhost:3000')
+      }),
+      assets: { mode: 'local', dir: './public' }
+    },
+    edge: {
+      assets: { mode: 'hosted', origin: env('ASSET_ORIGIN') }
+    }
+  }
+}));
+
+const app = new Pulse({ config });
+await app.listen();
+</code></pre>
+</div><p>If the active profile does not define <code>host</code>, the app is fetch-native by default and <code>app.bind()</code> is the portable runtime seam.</p>
+<h2 id="config-access">Config access</h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">const active = app.config();
+const assets = app.config('assets');
+
+app.env('ASSET_BUCKET');
+app.env.number('TTL', 3600);
+app.env.boolean('DEBUG', false);
+</code></pre>
+</div><p><code>pulse.config</code> is code so it can be explicit, commented, and Wasm-build-friendly. Environment resolution happens through the <code>env</code> resolver passed into <code>defineConfig(...)</code>, not through app code reaching directly into host globals.</p>
+<h2 id="runtime-options">Runtime options</h2>
+<p>Runtime options are the only app-layer options that shallow-merge by key:</p>
+<ol>
+<li>Pulse runtime defaults</li>
+<li>active profile <code>runtime</code></li>
+<li><code>new Pulse({ runtime })</code> overrides</li>
+</ol>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">const app = new Pulse({
+  config,
+  runtime: {
+    defaultHttpMode: 'stream'
+  }
+});
+</code></pre>
+</div><p>Profile <code>host</code> does not merge. If a profile needs Node-style local hosting, define <code>host</code> on that profile. If it does not, the profile is fetch-native.</p>
+<h2 id="assets">Assets</h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { AssetManager } from 'pulse.assets';
+
+app.use('/assets', new AssetManager(app.config('assets')));
+</code></pre>
+</div><p>The app layer resolves the active profile. <code>AssetManager</code> consumes the resolved explicit-mode shape: <code>local</code>, <code>hosted</code>, or <code>bucket</code>. Route code does not branch on local/prod/edge, and the middleware does not infer from profile labels.</p>
+<h2 id="development">Development</h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">sh</span></div>
+  <pre><code class="language-sh">pnpm install
+pnpm build
+pnpm test
+pnpm test:e2e
+</code></pre>
+</div></article>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Router boundary — Pulse</title>
+    <meta name="description" content="Router exists to scope behavior, not to become a framework." />
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-doc">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../../index.html">Home</a><a class="nav-link" data-nav-link href="../../index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../../../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../../index.html">Overview</a><a class="docs-nav__link" href="../../api/index.html">API reference</a><a class="docs-nav__link" href="../core/index.html">Runtime boundary</a><a class="docs-nav__link" href="index.html" aria-current="page">Router boundary</a><a class="docs-nav__link" href="../grip-gateway/index.html">GRIP gateway</a><a class="docs-nav__link" href="../../testing/index.html">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../../../examples/index.html">Overview</a><a class="docs-nav__link" href="../../../examples/01-minimal/index.html">Minimal Pulse app</a><a class="docs-nav__link" href="../../../examples/02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../../../examples/03-node/index.html">Node usage</a><a class="docs-nav__link" href="../../../examples/04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../../index.html">Home</a> / <a href="../../index.html">Docs</a> / <span>Router boundary</span></nav>
+            <div class="page-hero__eyebrow">Design</div>
+            <h1 class="page-hero__title">Router boundary</h1>
+            <p class="page-hero__copy">Router exists to scope behavior, not to become a framework.</p>
+            <div class="meta-chips"><span class="chip">router</span><span class="chip">path grammar</span></div>
+          </div>
+        </section>
+        <article class="content-card prose"><h1 id="router-boundary">Router boundary</h1>
+<p><code>Router</code> exists to scope behavior, not to become a framework.</p>
+<p>It owns:</p>
+<ul>
+<li>path-scoped routing</li>
+<li>middleware order</li>
+<li>nested routers</li>
+<li>lifecycle hooks</li>
+<li>channel defaults</li>
+<li>explicit error boundaries</li>
+</ul>
+<p>It does not own:</p>
+<ul>
+<li>provider capability</li>
+<li>host lifecycle</li>
+<li>advanced path language</li>
+<li>framework adapters</li>
+</ul>
+<h2 id="path-grammar">Path grammar</h2>
+<p>Allowed:</p>
+<ul>
+<li>literals</li>
+<li>multiple <code>:params</code></li>
+<li>one trailing <code>*</code></li>
+<li>nested relative routers</li>
+</ul>
+<p>Not included:</p>
+<ul>
+<li>regex</li>
+<li>optional params</li>
+<li>mid-path wildcards</li>
+<li>path generation DSL</li>
+</ul>
+<h2 id="flow">Flow</h2>
+<p>Precedence is chain order and nesting order.</p>
+<p>Normal handlers use <code>(ctx, next)</code>.</p>
+<p>Errors are handled only by <code>.error((err, ctx, next) =&gt; ...)</code>.</p>
+<p>Inside an error handler:</p>
+<ul>
+<li>return <code>Response</code> to handle and terminate</li>
+<li>call <code>next(err)</code> to keep bubbling</li>
+<li>call <code>next()</code> to recover and resume normal flow</li>
+</ul>
+</article>
+      </div>
+      
+    <aside class="toc-card" aria-label="Table of contents">
+      <h2 class="toc-card__title">On this page</h2>
+      <ul class="toc-card__list">
+        <li><a class="toc-level-1" href="#router-boundary">Router boundary</a></li><li><a class="toc-level-2" href="#path-grammar">Path grammar</a></li><li><a class="toc-level-2" href="#flow">Flow</a></li>
+      </ul>
+    </aside>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

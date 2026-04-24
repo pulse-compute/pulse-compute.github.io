@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Minimal Pulse app — Pulse</title>
+    <meta name="description" content="Shows the smallest useful Pulse app with middleware, GET, POST, and an error boundary." />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-example">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../index.html">Home</a><a class="nav-link" data-nav-link href="../../docs/index.html">Docs</a><a class="nav-link" data-nav-link href="../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../index.html" aria-current="page">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page docs-page--wide">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../../docs/index.html">Overview</a><a class="docs-nav__link" href="../../docs/api/index.html">API reference</a><a class="docs-nav__link" href="../../docs/design/core/index.html">Runtime boundary</a><a class="docs-nav__link" href="../../docs/design/router/index.html">Router boundary</a><a class="docs-nav__link" href="../../docs/design/grip-gateway/index.html">GRIP gateway</a><a class="docs-nav__link" href="../../docs/testing/index.html">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../index.html">Overview</a><a class="docs-nav__link" href="index.html" aria-current="page">Minimal Pulse app</a><a class="docs-nav__link" href="../02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../03-node/index.html">Node usage</a><a class="docs-nav__link" href="../04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main example-layout">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Examples</a> / <span>Minimal Pulse app</span></nav>
+            <div class="page-hero__eyebrow">Example 01</div>
+            <h1 class="page-hero__title">Minimal Pulse app</h1>
+            <p class="page-hero__copy">Shows the smallest useful Pulse app with middleware, GET, POST, and an error boundary.</p>
+          </div>
+        </section>
+        <div class="example-layout__summary">
+          <article class="content-card prose"><h1 id="example-01-—-minimal-pulse-app">Example 01 — Minimal Pulse app</h1>
+<p>Shows the smallest useful Pulse app with middleware, GET, POST, and an error boundary.</p>
+<p>Run this shape in any fetch-style runtime with <code>app.bind()</code>.</p>
+</article>
+          <section class="source-panel">
+            <div class="source-panel__header"><span class="source-panel__label">01-minimal/index.ts</span></div>
+            <pre><code>import { Pulse, Router } from &#39;pulse&#39;;
+
+const pulse = new Pulse();
+const app = new Router({ pulse });
+
+app
+  .use(async (ctx, next) =&gt; {
+    ctx.state.startedAt = Date.now();
+    return next();
+  })
+  .get(&#39;/health&#39;, async (ctx) =&gt; {
+    return ctx.reply({ ok: true, startedAt: ctx.state.startedAt });
+  })
+  .post(&#39;/compute/:id&#39;, async (ctx) =&gt; {
+    return ctx.reply({ ok: true, id: ctx.params.id });
+  })
+  .error(async (err, ctx) =&gt; {
+    return ctx.reply({ ok: false, error: String(err) }, { status: 500 });
+  });
+
+export default app.bind();
+</code></pre>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

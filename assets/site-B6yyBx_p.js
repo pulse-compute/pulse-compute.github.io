@@ -1,0 +1,1 @@
+var e=window.location.pathname.replace(/index\.html$/,``);for(let t of document.querySelectorAll(`[data-nav-link]`)){let n=t.getAttribute(`href`)||``;new URL(n,window.location.href).pathname.replace(/index\.html$/,``)===e&&t.setAttribute(`aria-current`,`page`)}

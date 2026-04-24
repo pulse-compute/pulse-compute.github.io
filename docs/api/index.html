@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>API reference — Pulse</title>
+    <meta name="description" content="This is the current public API contract after the package split." />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-doc">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../index.html">Home</a><a class="nav-link" data-nav-link href="../index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../index.html">Overview</a><a class="docs-nav__link" href="index.html" aria-current="page">API reference</a><a class="docs-nav__link" href="../design/core/index.html">Runtime boundary</a><a class="docs-nav__link" href="../design/router/index.html">Router boundary</a><a class="docs-nav__link" href="../design/grip-gateway/index.html">GRIP gateway</a><a class="docs-nav__link" href="../testing/index.html">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../../examples/index.html">Overview</a><a class="docs-nav__link" href="../../examples/01-minimal/index.html">Minimal Pulse app</a><a class="docs-nav__link" href="../../examples/02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../../examples/03-node/index.html">Node usage</a><a class="docs-nav__link" href="../../examples/04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Docs</a> / <span>API reference</span></nav>
+            <div class="page-hero__eyebrow">Public surface</div>
+            <h1 class="page-hero__title">API reference</h1>
+            <p class="page-hero__copy">This is the current public API contract after the package split.</p>
+            <div class="meta-chips"><span class="chip">reference</span><span class="chip">typed surface</span></div>
+          </div>
+        </section>
+        <article class="content-card prose"><h1 id="pulse-api">Pulse API</h1>
+<p>This is the current public API contract after the package split.</p>
+<h2 id="packages">Packages</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pulse</code></td>
+<td>Opinionated app/workflow layer. Normal entry point.</td>
+</tr>
+<tr>
+<td><code>pulse.runtime</code></td>
+<td>Runtime substrate. Lower-level escape hatch.</td>
+</tr>
+<tr>
+<td><code>pulse.node</code></td>
+<td>Node host lifecycle glue.</td>
+</tr>
+<tr>
+<td><code>pulse.grip</code></td>
+<td>Optional GRIP gateway middleware/broadcaster.</td>
+</tr>
+<tr>
+<td><code>pulse.assets</code></td>
+<td>Optional asset middleware.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="pulse"><code>pulse</code></h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { Pulse, Router, defineConfig } from 'pulse';
+</code></pre>
+</div><h3 id="defineconfiginput"><code>defineConfig(input)</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type PulseConfigInput&lt;T = Record&lt;string, unknown&gt;&gt; =
+  | T
+  | ((env: PulseEnvResolver) =&gt; T);
+
+function defineConfig&lt;T&gt;(input: PulseConfigInput&lt;T&gt;): PulseConfigInput&lt;T&gt;;
+</code></pre>
+</div><p>The config function receives a narrow <code>env</code> resolver.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">const config = defineConfig((env) =&gt; ({
+  env: env.define(['PULSE_PROFILE', 'ASSET_BUCKET']),
+  profile: env('PULSE_PROFILE', 'local'),
+  ttl: env.number('TTL', 3600),
+  debug: env.boolean('DEBUG', false),
+  profiles: {
+    local: { assets: { mode: 'local', dir: './public' } },
+    edge: { assets: { mode: 'bucket', bucket: env('ASSET_BUCKET') } }
+  }
+}));
+</code></pre>
+</div><h3 id="pulseenvresolver"><code>PulseEnvResolver</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type PulseEnvResolver = {
+  (name: string): string | undefined;
+  (name: string, fallback: string): string;
+  define(names: string[] | Record&lt;string, unknown&gt;): string[] | Record&lt;string, unknown&gt;;
+  number(name: string): number | undefined;
+  number(name: string, fallback: number): number;
+  boolean(name: string): boolean | undefined;
+  boolean(name: string, fallback: boolean): boolean;
+};
+</code></pre>
+</div><p><code>env()</code> resolves from the environment source supplied to the app layer. App code does not directly read host globals.</p>
+<h3 id="new-pulseoptions"><code>new Pulse(options?)</code></h3>
+<p><code>Pulse</code> extends the runtime substrate and adds app/workflow helpers.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type PulseAppOptions&lt;TConfig = Record&lt;string, unknown&gt;&gt; = {
+  config?: PulseConfigInput&lt;TConfig&gt;;
+  env?: Record&lt;string, string | number | boolean | null | undefined&gt; | (() =&gt; Record&lt;string, string | number | boolean | null | undefined&gt;);
+  runtime?: Partial&lt;PulseOptions&gt;;
+};
+</code></pre>
+</div><h3 id="appconfig"><code>app.config()</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">app.config();          // resolved active profile config
+app.config('assets');  // resolved namespace from active profile
+</code></pre>
+</div><p>Rules:</p>
+<ul>
+<li>returns resolved config only</li>
+<li>throws on missing namespace</li>
+<li>profile selection comes from config <code>profile</code>, then <code>local</code> if present, then first profile key</li>
+</ul>
+<h3 id="appenv"><code>app.env(...)</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">app.env('KEY');
+app.env('KEY', 'fallback');
+app.env.number('TTL', 3600);
+app.env.boolean('DEBUG', false);
+</code></pre>
+</div><h3 id="app-router-helpers">App router helpers</h3>
+<p><code>Pulse</code> owns a default internal router and forwards the small router surface:</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">app.get(path, handler);
+app.post(path, handler);
+app.use(handler);
+app.use(path, handler);
+app.mount(path, router);
+app.channel(definition);
+app.on('connect', handler);
+app.on('disconnect', handler);
+app.error(handler);
+app.bind();
+app.handle(request, runtime?);
+</code></pre>
+</div><h3 id="applistenoptions"><code>app.listen(options?)</code></h3>
+<p><code>listen()</code> delegates to the active profile’s <code>host</code> binder. If the active profile defines no host binder, the app is fetch-native by default and <code>app.bind()</code> remains the portable runtime seam.</p>
+<p><code>host</code> is profile-local and explicit:</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { node } from 'pulse.node';
+
+const config = defineConfig((env) =&gt; ({
+  profile: env('PULSE_PROFILE', 'local'),
+  profiles: {
+    local: {
+      host: node({ port: env.number('PORT', 3000) })
+    }
+  }
+}));
+</code></pre>
+</div><hr>
+<h2 id="pulseruntime"><code>pulse.runtime</code></h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { PulseRuntime, Router } from 'pulse.runtime';
+</code></pre>
+</div><p>Use this when you want the lower-level substrate without the app layer.</p>
+<h3 id="new-pulseruntimeoptions"><code>new PulseRuntime(options?)</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type PulseOptions = {
+  gateway?: PulseGatewayLike;
+  broadcaster?: PulseBroadcasterLike;
+  defaultHttpMode?: 'stream' | 'sse' | 'response' | 'long-poll';
+  strictProxy?: boolean;
+  channelPrefix?: string;
+  verify?: 'auto' | 'required' | 'off';
+  trace?: PulseTraceHooks;
+  onError?: (err: unknown, ctx: { phase: string }) =&gt; void;
+};
+</code></pre>
+</div><h3 id="runtimecreatesessionrequest"><code>runtime.createSession(request)</code></h3>
+<p>Creates a normalized session.</p>
+<h3 id="runtimehandlerequest-handler"><code>runtime.handle(request, handler)</code></h3>
+<p>Runs a low-level session handler.</p>
+<h3 id="runtimebroadcastchannel-data-options"><code>runtime.broadcast(channel, data, options?)</code></h3>
+<p>Delegates to the configured broadcaster. Throws if no broadcaster exists.</p>
+<hr>
+<h2 id="router"><code>Router</code></h2>
+<p>Available from both <code>pulse</code> and <code>pulse.runtime</code>.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">const router = new Router({ pulse });
+</code></pre>
+</div><h3 id="methods">Methods</h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">router.get(path, handler);
+router.post(path, handler);
+router.use(handler);
+router.use(path, handler);
+router.mount(path, childRouter);
+router.channel(definition);
+router.on('connect', handler);
+router.on('disconnect', handler);
+router.error(handler);
+router.bind();
+router.handle(request, runtime?);
+</code></pre>
+</div><h3 id="path-grammar">Path grammar</h3>
+<p>Allowed:</p>
+<ul>
+<li>literal segments: <code>/health</code></li>
+<li>params: <code>/users/:userId/settings/:setting</code></li>
+<li>one trailing wildcard: <code>/assets/*</code></li>
+</ul>
+<p>No regex, optional params, or mid-path wildcards.</p>
+<h3 id="context">Context</h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type RouterContext = {
+  request: Request;
+  params: Readonly&lt;Record&lt;string, string&gt;&gt;;
+  state: Record&lt;string, unknown&gt;;
+  path: { absolute: string; relative: string };
+
+  type: 'http' | 'ws';
+  proxied: boolean;
+  signed: boolean;
+  ingress: PulseIngressState;
+
+  subscribe(channels?, options?): Promise&lt;Response&gt;;
+  reply(body?, options?): Promise&lt;Response&gt;;
+  passThrough(response?): Promise&lt;Response&gt;;
+  reject(status?, body?): Promise&lt;Response&gt;;
+  hold(mode?): RoutedPulseHttpBuilder;
+  ws(): RoutedPulseWsBuilder;
+
+  runtime?: PulseRuntimeContext;
+  raw: {
+    request?: unknown;
+    response?: unknown;
+    env?: unknown;
+    session?: PulseSessionRaw;
+    decorate(name: string, factory: PulseContextExtensionFactory): void;
+    [key: string]: unknown;
+  };
+};
+</code></pre>
+</div><p>Provider packages may add explicit namespaces such as <code>ctx.grip</code>.</p>
+<hr>
+<h2 id="pulsenode"><code>pulse.node</code></h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { listen, bindNode, bindHandler, fromNodeRequest, writeNodeResponse } from 'pulse.node';
+</code></pre>
+</div><h3 id="listenrouterorapp-options"><code>listen(routerOrApp, options?)</code></h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type PulseNodeListenOptions = {
+  port?: number;
+  hostname?: string;
+  baseUrl?: string;
+};
+</code></pre>
+</div><p>Node glue owns local host lifecycle. Core/runtime does not.</p>
+<hr>
+<h2 id="pulsegrip"><code>pulse.grip</code></h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { GripGateway } from 'pulse.grip';
+</code></pre>
+</div><p><code>GripGateway</code> is optional middleware and gateway implementation.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">const grip = new GripGateway({ grip: 'http://localhost:5561', ctxName: 'grip' });
+app.use(grip);
+</code></pre>
+</div><p>It decorates context with <code>ctx.grip</code> by default.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">ctx.grip!.subscribe(channel);
+ctx.grip!.unsubscribe(channel);
+ctx.grip!.disconnect(reason);
+ctx.grip!.reply(payload);
+</code></pre>
+</div><h3 id="gripgatewaybroadcasteroptions"><code>GripGateway.broadcaster(options)</code></h3>
+<p>Provides a broadcaster for <code>new Pulse({ broadcaster })</code> or app-layer <code>new Pulse({ broadcaster })</code>.</p>
+<hr>
+<h2 id="pulseassets"><code>pulse.assets</code></h2>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">import { AssetManager, AssetBucket, createAssets } from 'pulse.assets';
+</code></pre>
+</div><p><code>AssetManager</code> is the high-level asset middleware for resolved app/profile config.
+It requires an explicit <code>mode</code>: <code>local</code>, <code>hosted</code>, or <code>bucket</code>.</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">app.use('/assets', new AssetManager(app.config('assets')));
+</code></pre>
+</div><p><code>createAssets(config)</code> is equivalent to <code>new AssetManager(config)</code>.</p>
+<h3 id="asset-config-shapes">Asset config shapes</h3>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">type AssetsConfig =
+  | { mode: 'local'; dir: string; ttl?: number | false; immutable?: boolean }
+  | { mode: 'hosted'; origin: string; prefix?: string; ttl?: number | false; immutable?: boolean }
+  | ({ mode: 'bucket' } &amp; AssetBucketOptions);
+</code></pre>
+</div><p>Asset profile resolution belongs in the app layer. Asset middleware consumes the resolved shape and does not infer backend behavior from profile names, runtime, or env.</p>
+<p><code>AssetBucket</code> remains the lower-level S3-compatible bucket middleware for direct bucket-only usage.</p>
+</article>
+      </div>
+      
+    <aside class="toc-card" aria-label="Table of contents">
+      <h2 class="toc-card__title">On this page</h2>
+      <ul class="toc-card__list">
+        <li><a class="toc-level-1" href="#pulse-api">Pulse API</a></li><li><a class="toc-level-2" href="#packages">Packages</a></li><li><a class="toc-level-2" href="#pulse">`pulse`</a></li><li><a class="toc-level-3" href="#defineconfiginput">`defineConfig(input)`</a></li><li><a class="toc-level-3" href="#pulseenvresolver">`PulseEnvResolver`</a></li><li><a class="toc-level-3" href="#new-pulseoptions">`new Pulse(options?)`</a></li><li><a class="toc-level-3" href="#appconfig">`app.config()`</a></li><li><a class="toc-level-3" href="#appenv">`app.env(...)`</a></li><li><a class="toc-level-3" href="#app-router-helpers">App router helpers</a></li><li><a class="toc-level-3" href="#applistenoptions">`app.listen(options?)`</a></li><li><a class="toc-level-2" href="#pulseruntime">`pulse.runtime`</a></li><li><a class="toc-level-3" href="#new-pulseruntimeoptions">`new PulseRuntime(options?)`</a></li><li><a class="toc-level-3" href="#runtimecreatesessionrequest">`runtime.createSession(request)`</a></li><li><a class="toc-level-3" href="#runtimehandlerequest-handler">`runtime.handle(request, handler)`</a></li><li><a class="toc-level-3" href="#runtimebroadcastchannel-data-options">`runtime.broadcast(channel, data, options?)`</a></li><li><a class="toc-level-2" href="#router">`Router`</a></li><li><a class="toc-level-3" href="#methods">Methods</a></li><li><a class="toc-level-3" href="#path-grammar">Path grammar</a></li><li><a class="toc-level-3" href="#context">Context</a></li><li><a class="toc-level-2" href="#pulsenode">`pulse.node`</a></li><li><a class="toc-level-3" href="#listenrouterorapp-options">`listen(routerOrApp, options?)`</a></li><li><a class="toc-level-2" href="#pulsegrip">`pulse.grip`</a></li><li><a class="toc-level-3" href="#gripgatewaybroadcasteroptions">`GripGateway.broadcaster(options)`</a></li><li><a class="toc-level-2" href="#pulseassets">`pulse.assets`</a></li><li><a class="toc-level-3" href="#asset-config-shapes">Asset config shapes</a></li>
+      </ul>
+    </aside>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

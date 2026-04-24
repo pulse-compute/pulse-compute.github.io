@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Runtime boundary — Pulse</title>
+    <meta name="description" content="pulse.runtime is deliberately small." />
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-doc">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../../index.html">Home</a><a class="nav-link" data-nav-link href="../../index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../../../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../../index.html">Overview</a><a class="docs-nav__link" href="../../api/index.html">API reference</a><a class="docs-nav__link" href="index.html" aria-current="page">Runtime boundary</a><a class="docs-nav__link" href="../router/index.html">Router boundary</a><a class="docs-nav__link" href="../grip-gateway/index.html">GRIP gateway</a><a class="docs-nav__link" href="../../testing/index.html">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../../../examples/index.html">Overview</a><a class="docs-nav__link" href="../../../examples/01-minimal/index.html">Minimal Pulse app</a><a class="docs-nav__link" href="../../../examples/02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../../../examples/03-node/index.html">Node usage</a><a class="docs-nav__link" href="../../../examples/04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../../index.html">Home</a> / <a href="../../index.html">Docs</a> / <span>Runtime boundary</span></nav>
+            <div class="page-hero__eyebrow">Design</div>
+            <h1 class="page-hero__title">Runtime boundary</h1>
+            <p class="page-hero__copy">pulse.runtime is deliberately small.</p>
+            <div class="meta-chips"><span class="chip">runtime</span><span class="chip">boundary</span></div>
+          </div>
+        </section>
+        <article class="content-card prose"><h1 id="runtime-boundary">Runtime boundary</h1>
+<p><code>pulse.runtime</code> is deliberately small.</p>
+<p>It owns:</p>
+<ul>
+<li><code>PulseRuntime</code></li>
+<li><code>Router</code></li>
+<li>normalized session behavior</li>
+<li>context shape</li>
+<li>broadcast seam</li>
+<li>wire envelopes</li>
+<li><code>bind()</code> contract</li>
+</ul>
+<p>It does not own:</p>
+<ul>
+<li>app/workflow profile selection</li>
+<li>host lifecycle convenience</li>
+<li>asset backend selection</li>
+<li>GRIP/Fanout/Pushpin framing</li>
+<li>provider-specific handoff</li>
+<li>long-lived connection management outside the normalized session contract</li>
+</ul>
+<h2 id="app-layer">App layer</h2>
+<p><code>pulse</code> sits above this runtime. It may smooth workflow through:</p>
+<ul>
+<li>config/env/profile resolution</li>
+<li><code>app.config()</code></li>
+<li>router forwarding</li>
+<li>profile-scoped <code>listen()</code> convenience</li>
+</ul>
+<p>That smoothing must not redefine runtime semantics.</p>
+<h2 id="rule">Rule</h2>
+<p>Runtime can expose generic application-facing verbs:</p>
+<ul>
+<li>reply</li>
+<li>subscribe</li>
+<li>broadcast</li>
+<li>pass through</li>
+<li>reject</li>
+</ul>
+<p>Runtime should not expose provider protocol nouns as first-class concepts.</p>
+</article>
+      </div>
+      
+    <aside class="toc-card" aria-label="Table of contents">
+      <h2 class="toc-card__title">On this page</h2>
+      <ul class="toc-card__list">
+        <li><a class="toc-level-1" href="#runtime-boundary">Runtime boundary</a></li><li><a class="toc-level-2" href="#app-layer">App layer</a></li><li><a class="toc-level-2" href="#rule">Rule</a></li>
+      </ul>
+    </aside>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>

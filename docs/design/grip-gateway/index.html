@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>GRIP gateway — Pulse</title>
+    <meta name="description" content="GRIP is a lower-level HTTP gateway/proxy framing protocol." />
+    <link rel="icon" href="../../../favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="../../../assets/main-4KNzPTpL.js"></script>
+    <script type="module" crossorigin src="../../../assets/site-B6yyBx_p.js"></script>
+    <link rel="stylesheet" crossorigin href="../../../assets/main-Bofn-mRB.css">
+  </head>
+  <body class="page-doc">
+    <div class="page-shell">
+      
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../../../index.html" aria-label="Pulse home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2.1-5.5 3.3 11L14 12h8" /></svg>
+        <span>Pulse</span>
+      </a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav-link href="../../../index.html">Home</a><a class="nav-link" data-nav-link href="../../index.html" aria-current="page">Docs</a><a class="nav-link" data-nav-link href="../../../packages/index.html">Packages</a><a class="nav-link" data-nav-link href="../../../examples/index.html">Examples</a></nav>
+    </div>
+  </header>
+      
+  <main class="container site-header">
+    <div class="docs-page">
+      
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation sections">
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Docs</h2>
+            <a class="docs-nav__link" href="../../index.html">Overview</a><a class="docs-nav__link" href="../../api/index.html">API reference</a><a class="docs-nav__link" href="../core/index.html">Runtime boundary</a><a class="docs-nav__link" href="../router/index.html">Router boundary</a><a class="docs-nav__link" href="index.html" aria-current="page">GRIP gateway</a><a class="docs-nav__link" href="../../testing/index.html">Testing</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Packages</h2>
+            <a class="docs-nav__link" href="../../../packages/index.html">Overview</a><a class="docs-nav__link" href="../../../packages/pulse/index.html">pulse</a><a class="docs-nav__link" href="../../../packages/pulse-runtime/index.html">pulse.runtime</a><a class="docs-nav__link" href="../../../packages/pulse-node/index.html">pulse.node</a><a class="docs-nav__link" href="../../../packages/pulse-grip/index.html">pulse.grip</a><a class="docs-nav__link" href="../../../packages/pulse-assets/index.html">pulse.assets</a>
+          </section>
+        
+          <section class="docs-nav__group">
+            <h2 class="docs-nav__heading">Examples</h2>
+            <a class="docs-nav__link" href="../../../examples/index.html">Overview</a><a class="docs-nav__link" href="../../../examples/01-minimal/index.html">Minimal Pulse app</a><a class="docs-nav__link" href="../../../examples/02-realtime-router/index.html">Mounted realtime router</a><a class="docs-nav__link" href="../../../examples/03-node/index.html">Node usage</a><a class="docs-nav__link" href="../../../examples/04-grip-gateway/index.html">GRIP gateway usage</a>
+          </section>
+        
+      </nav>
+    </aside>
+      <div class="docs-main">
+        <section class="page-hero">
+          <div class="page-hero__content">
+            <nav class="breadcrumbs" aria-label="Breadcrumbs"><a href="../../../index.html">Home</a> / <a href="../../index.html">Docs</a> / <span>GRIP gateway</span></nav>
+            <div class="page-hero__eyebrow">Design</div>
+            <h1 class="page-hero__title">GRIP gateway</h1>
+            <p class="page-hero__copy">GRIP is a lower-level HTTP gateway/proxy framing protocol.</p>
+            <div class="meta-chips"><span class="chip">gateway</span><span class="chip">realtime</span></div>
+          </div>
+        </section>
+        <article class="content-card prose"><h1 id="grip-gateway-boundary">GRIP gateway boundary</h1>
+<p>GRIP is a lower-level HTTP gateway/proxy framing protocol.</p>
+<p>Pushpin and Fastly Fanout are implementations or provider expressions of that pattern.</p>
+<p>Pulse core should not know GRIP headers, WebSocket-over-HTTP control messages, or provider hold semantics.</p>
+<h2 id="package-role">Package role</h2>
+<p><code>pulse.grip</code> owns:</p>
+<ul>
+<li>GRIP ingress verification</li>
+<li>WebSocket-over-HTTP context mapping</li>
+<li>hold response formatting</li>
+<li>subscribe/unsubscribe/disconnect gateway helpers</li>
+<li>GRIP-backed broadcaster</li>
+<li>context namespace decoration</li>
+</ul>
+<h2 id="context-namespace">Context namespace</h2>
+<p>Gateway behavior is explicit:</p>
+<div class="code-block">
+  <div class="code-block__header"><span class="code-block__label">ts</span></div>
+  <pre><code class="language-ts">ctx.grip.subscribe(...)
+ctx.grip.unsubscribe(...)
+ctx.grip.disconnect(...)
+</code></pre>
+</div><p>Aliases such as <code>ctx.fanout</code> are allowed via <code>ctxName</code>, but the package/class name stays honest: GRIP gateway.</p>
+<h2 id="rule">Rule</h2>
+<p><code>ctx.subscribe(...)</code> should remain core behavior.</p>
+<p><code>ctx.grip.subscribe(...)</code> is gateway behavior.</p>
+<p>Do not silently mutate core semantics because a gateway middleware was installed.</p>
+</article>
+      </div>
+      
+    <aside class="toc-card" aria-label="Table of contents">
+      <h2 class="toc-card__title">On this page</h2>
+      <ul class="toc-card__list">
+        <li><a class="toc-level-1" href="#grip-gateway-boundary">GRIP gateway boundary</a></li><li><a class="toc-level-2" href="#package-role">Package role</a></li><li><a class="toc-level-2" href="#context-namespace">Context namespace</a></li><li><a class="toc-level-2" href="#rule">Rule</a></li>
+      </ul>
+    </aside>
+    </div>
+  </main>
+      
+  <footer class="site-footer">
+    <div class="container">Vite multi-page static docs / generated from Pulse markdown and source snapshots</div>
+  </footer>
+    </div>
+  </body>
+</html>
